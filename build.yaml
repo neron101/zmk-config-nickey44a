@@ -1,31 +1,13 @@
-# This file generates the GitHub Actions matrix.
-# For simple board + shield combinations, add them to the top level board and
-# shield arrays, for more control, add individual board + shield combinations
-# to the `include` property. You can also use the `cmake-args` property to
-# pass flags to the build command and `artifact-name` to assign a name to
-# distinguish build outputs from each other:
-#
-# board: [ "nice_nano_v2" ]
-# shield: [ "corne_left", "corne_right" ]
-# include:
-#   - board: bdn9_rev2
-#   - board: nice_nano_v2
-#     shield: reviung41
-#   - board: nice_nano_v2
-#     shield: corne_left
-#     cmake-args: -DCONFIG_ZMK_USB_LOGGING=y
-#     artifact-name: corne_left_with_logging
-#
+# DYA Studio フル対応 Nickey44A ファームウェア（cormoran/zmk main+dya, Zephyr 4.1）
 ---
 include:
-  - board: seeeduino_xiao_ble
+  - board: xiao_ble//zmk
     shield: nickey44a_r rgbled_adapter
     snippet: studio-rpc-usb-uart
-    cmake-args: -DCONFIG_ZMK_STUDIO=y
     artifact-name: nickey44a_r
-  - board: seeeduino_xiao_ble
+  - board: xiao_ble//zmk
     shield: nickey44a_l rgbled_adapter
     artifact-name: nickey44a_l
-  - board: seeeduino_xiao_ble
+  - board: xiao_ble//zmk
     shield: settings_reset
     artifact-name: settings_reset
