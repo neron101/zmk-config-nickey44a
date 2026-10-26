@@ -1,3 +1,8 @@
+/* DYA Studio / ZMK Studio で Mod-Tap・Layer-Tap など全ビヘイビアを使えるようにする */
+#ifndef ZMK_BEHAVIORS_KEEP_ALL
+#define ZMK_BEHAVIORS_KEEP_ALL
+#endif
+
 #include <behaviors.dtsi>
 #include <dt-bindings/zmk/bt.h>
 #include <dt-bindings/zmk/keys.h>
