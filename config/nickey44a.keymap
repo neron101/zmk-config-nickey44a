@@ -7,6 +7,12 @@
 #include <dt-bindings/zmk/bt.h>
 #include <dt-bindings/zmk/keys.h>
 
+/* 俺風キーマップ（ZaruBall / cocot36 流儀） */
+#define BASE   0
+#define LOWER  1
+#define RAISE  2
+#define ADJUST 3
+
 &mt {
     flavor = "balanced";
     quick-tap-ms = <0>;
@@ -18,7 +24,25 @@
 };
 
 / {
-    combos { compatible = "zmk,combos"; };
+    combos {
+        compatible = "zmk,combos";
+
+        /* N + M → [ */
+        combo_lbkt {
+            timeout-ms = <50>;
+            key-positions = <32 33>;
+            bindings = <&kp LBKT>;
+            layers = <BASE>;
+        };
+
+        /* , + . → ] */
+        combo_rbkt {
+            timeout-ms = <50>;
+            key-positions = <34 35>;
+            bindings = <&kp RBKT>;
+            layers = <BASE>;
+        };
+    };
 
     macros {
         to_layer_0: to_layer_0 {
@@ -38,46 +62,59 @@
             #binding-cells = <2>;
             tapping-term-ms = <200>;
         };
-
     };
 
     keymap {
         compatible = "zmk,keymap";
 
+        /* 0: ベース
+           左親指 = Alt / Cmd / Space(長押しRAISE)
+           右親指 = Enter(長押しLOWER) / Backspace / Space(長押しADJUST) */
         default_layer {
+            display-name = "Base";
             bindings = <
-&kp TAB    &kp Q  &kp W  &kp E  &kp R  &kp T                              &kp Y    &kp U     &kp I      &kp O    &kp P     &kp SQT
-&kp LCTRL  &kp A  &kp S  &kp D  &kp F  &kp G                              &kp H    &kp J     &kp K      &kp L    &kp SEMI  &kp MINUS
-&kp LSHFT  &kp Z  &kp X  &kp C  &kp V  &kp B  &kp LEFT_WIN    &kp DELETE  &kp N    &kp M     &kp COMMA  &kp DOT  &kp FSLH  &kp EQUAL
-                                &mo 2  &mo 1  &kp SPACE       &kp BSPC    &kp RET  &kp RALT
+&kp TAB          &kp Q  &kp W  &kp E  &kp R  &kp T                              &kp Y  &kp U  &kp I      &kp O    &kp P         &kp MINUS
+&mt LCTRL CAPS   &kp A  &kp S  &kp D  &kp F  &kp G                              &kp H  &kp J  &kp K      &kp L    &kp SEMI      &kp SQT
+&kp LSHFT        &kp Z  &kp X  &kp C  &kp V  &kp B  &kp LBKT          &kp RBKT  &kp N  &kp M  &kp COMMA  &kp DOT  &kp RS(FSLH)  &mt RSHFT FSLH
+                         &kp LALT  &kp LGUI  &lt RAISE SPACE          &lt LOWER RET  &kp BSPC  &lt ADJUST SPACE
             >;
         };
 
-        layer_1 {
+        /* 1: LOWER（Enter長押し）= シフト数字＋矢印＋かな/英数 */
+        lower_layer {
+            display-name = "Lower";
             bindings = <
-&kp ESCAPE  &kp NUMBER_1  &kp NUMBER_2  &kp NUMBER_3  &kp NUMBER_4  &kp NUMBER_5                            &kp NUMBER_6      &kp N7                &kp N8                 &kp N9             &kp N0         &kp GRAVE
-&trans      &kp F1        &kp F2        &kp F3        &kp F4        &kp F5                                  &kp LEFT          &kp DOWN              &kp UP                 &kp RIGHT          &trans         &kp TILDE
-&trans      &kp F6        &kp F7        &kp F8        &kp F9        &kp F10       &mo 3     &studio_unlock  &kp LEFT_BRACKET  &kp LEFT_PARENTHESIS  &kp RIGHT_PARENTHESIS  &kp RIGHT_BRACKET  &kp BACKSLASH  &trans
-                                                      &trans        &trans        &trans    &kp DELETE      &trans            &trans
+&kp ESC  &kp LS(N1)  &kp LS(N2)  &kp LS(N3)  &kp LS(N4)  &kp LS(N5)                      &kp RS(N6)  &kp RS(N7)  &kp RS(N8)  &kp RS(N9)  &kp RS(N0)  &kp EQUAL
+&trans   &kp LEFT    &kp UP      &kp RIGHT   &kp LSHFT   &kp LANG1                       &kp MINUS   &kp EQUAL   &kp LBKT    &kp RBKT    &kp BSLH    &kp GRAVE
+&trans   &kp LEFT    &kp DOWN    &kp RIGHT   &kp LCTRL   &kp LANG2   &trans      &trans  &trans      &trans      &trans      &trans      &trans      &trans
+                                             &trans      &trans      &trans      &trans  &trans      &kp DEL
             >;
         };
 
-        layer_2 {
+        /* 2: RAISE（Space長押し）= 数字＋矢印＋かな/英数＋F/ナビ */
+        raise_layer {
+            display-name = "Raise";
             bindings = <
-&trans  &trans  &trans     &trans      &trans  &trans                    &kp QUESTION   &trans  &trans  &trans  &kp PERCENT  &trans
-&trans  &kp AT  &kp HASH   &kp DOLLAR  &trans  &trans                    &kp EXCL       &trans  &trans  &trans  &trans       &trans
-&trans  &trans  &kp ASTRK  &kp CARET   &trans  &trans  &trans    &trans  &kp AMPERSAND  &trans  &trans  &trans  &trans       &trans
-                                       &trans  &trans  &trans    &trans  &trans         &trans
+&kp ESC  &kp N1    &kp N2    &kp N3     &kp N4     &kp N5                      &kp N6    &kp N7     &kp N8     &kp N9     &kp N0      &kp EQUAL
+&trans   &kp LEFT  &kp UP    &kp RIGHT  &kp LSHFT  &kp LANG1                   &kp HOME  &kp PG_DN  &kp PG_UP  &kp END    &trans      &trans
+&trans   &kp LEFT  &kp DOWN  &kp RIGHT  &kp LCTRL  &kp LANG2  &trans   &trans  &kp F1    &kp F2     &kp F3     &kp F4     &kp F5      &kp F6
+                                        &trans     &trans     &trans   &trans  &trans    &kp DEL
             >;
         };
 
-        layer_3 {
+        /* 3: ADJUST（右親指Space長押し）= Bluetooth・音量 */
+        adjust_layer {
+            display-name = "Adjust";
             bindings = <
-&bt BT_CLR      &bt BT_SEL 0  &bt BT_SEL 1  &bt BT_SEL 2  &bt BT_SEL 3  &bt BT_SEL 4                    &trans  &trans  &trans  &trans  &trans  &trans
-&bt BT_CLR_ALL  &trans        &trans        &trans        &trans        &trans                          &trans  &trans  &trans  &trans  &trans  &trans
-&trans          &trans        &trans        &trans        &trans        &trans        &trans    &trans  &trans  &trans  &trans  &trans  &trans  &trans
-                                                          &trans        &trans        &trans    &trans  &trans  &trans
+&bt BT_CLR      &bt BT_SEL 0  &bt BT_SEL 1  &bt BT_SEL 2  &bt BT_SEL 3  &bt BT_SEL 4                       &kp C_VOL_DN  &kp C_VOL_UP  &kp C_MUTE  &none  &none  &bootloader
+&bt BT_CLR_ALL  &none         &none         &none         &none         &none                              &none         &none         &none       &none  &none  &none
+&trans          &none         &none         &none         &none         &none         &none       &none    &none         &none         &none       &none  &none  &studio_unlock
+                                                          &trans        &trans        &trans      &trans   &trans        &trans
             >;
         };
+
+        /* DYA Studioでレイヤーを追加するための予備 */
+        extra1 { status = "reserved"; };
+        extra2 { status = "reserved"; };
     };
 };
