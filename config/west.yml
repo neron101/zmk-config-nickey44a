@@ -1,29 +1,41 @@
+# DYA Studio フル対応（コンボ・マクロ編集）: cormoran/zmk main+dya（Zephyr 4.1）
+# 動作実績のある 2026-10-12 時点のコミットに固定
 manifest:
+  defaults:
+    remote: cormoran
+    revision: main
   remotes:
-    - name: zmkfirmware
-      url-base: https://github.com/zmkfirmware
     - name: cormoran
       url-base: https://github.com/cormoran
-    - name: caksoylar  # <-- RGB LED
+    - name: caksoylar
       url-base: https://github.com/caksoylar
   projects:
-    # ZMK本体（DYA Studio対応 cormoran版 v0.3）
     - name: zmk
-      remote: cormoran
-      revision: v0.3-branch+dya
-      import: app/west.yml
-    - name: zmk-rgbled-widget
-      remote: caksoylar
-      revision: 8756cb7b8114069fa3c25c6f6c990f24988fceff # v0.3
-    # DYA Studio用モジュール（v0.3対応版）
+      revision: e5c9b6915b56801193e359dd9bad4a167ce0d1b8 # main+dya (2026-10-12)
+      import:
+        file: app/west.yml
+    - name: zmk-feature-custom-settings
+      revision: c6a7fef3a3be3d3ace5de9a4b0628c6418cd1f3f
+    - name: zmk-feature-fast-keymap
+      revision: 8dac76de0ba38588ba39ca498910e24f8332bc6b
+    - name: zmk-feature-runtime-macro
+      revision: 38530962eb7061b60efcb98e84585cfb1f0cb6de
+    - name: zmk-feature-runtime-combo
+      revision: d9490e7b5d41c516221d131241009e81740efcee
+    - name: zmk-feature-input-stream
+      revision: aeb015908a42a7615ccdccc7feb3a10d23132a71
+    - name: zmk-feature-module-physical-layout
+      revision: 4f18de45dc27820725d267916b4cdacc0e0b6cf9
     - name: zmk-module-ble-management
-      remote: cormoran
-      revision: zmk-v0.3.0.0
-    - name: zmk-module-battery-history
-      remote: cormoran
-      revision: main
+      revision: 57738cc4fc6ba80e82a7ac57741a0339cb186cd4
     - name: zmk-module-settings-rpc
-      remote: cormoran
-      revision: main
+      revision: 78f86df9e6c5edaf57bef3ccbd7f360cfdf49291
+    - name: zmk-feature-device-info
+      revision: 8cedd2dd9f04e19ea5a17b94914dd47a09d8db11
+    - name: zmk-feature-kscan-diagnostics
+      revision: 1432f7fe0cfe903cd7d3c9931ae6bd6f2e1f328e
+    - name: zmk-rgbled-widget
+      revision: e6b467792a1dabef8cfa5c9fd26bfefc9c16662b
+      remote: caksoylar
   self:
     path: config
