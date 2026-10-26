@@ -1,6 +1,11 @@
 #include <dt-bindings/zmk/matrix_transform.h>
 #include <physical_layouts.dtsi>
 
+/* Zephyr 4.1 では CONFIG_NFCT_PINS_AS_GPIOS が廃止されたため devicetree で指定 */
+&uicr {
+    nfct-pins-as-gpios;
+};
+
 / {
     chosen {
         zmk,physical-layout = &physical_layout0;
@@ -75,7 +80,6 @@
 
     kscan0: kscan {
         compatible = "zmk,kscan-gpio-matrix";
-        label = "KSCAN";
         diode-direction = "col2row";
         wakeup-source;
             row-gpios
