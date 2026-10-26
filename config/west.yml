@@ -7,12 +7,23 @@ manifest:
     - name: caksoylar  # <-- RGB LED
       url-base: https://github.com/caksoylar
   projects:
+    # ZMK本体（DYA Studio対応 cormoran版 v0.3）
     - name: zmk
       remote: cormoran
-      revision: 3931facea7507151a53f209ca4f8a717fa6bd400 # v0.3-branch+dya
+      revision: v0.3-branch+dya
       import: app/west.yml
     - name: zmk-rgbled-widget
       remote: caksoylar
       revision: 8756cb7b8114069fa3c25c6f6c990f24988fceff # v0.3
+    # DYA Studio用モジュール（v0.3対応版）
+    - name: zmk-module-ble-management
+      remote: cormoran
+      revision: zmk-v0.3.0.0
+    - name: zmk-module-battery-history
+      remote: cormoran
+      revision: main
+    - name: zmk-module-settings-rpc
+      remote: cormoran
+      revision: main
   self:
     path: config
