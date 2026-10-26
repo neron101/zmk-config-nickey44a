@@ -24,23 +24,24 @@
 };
 
 / {
-    combos {
-        compatible = "zmk,combos";
+    /* コンボ（DYA Studio の「コンボ」タブから編集・追加できます） */
+    runtime_combo_defaults {
+        compatible = "cormoran,runtime-combo-defaults";
 
-        /* N + M → [ */
         combo_lbkt {
-            timeout-ms = <50>;
             key-positions = <32 33>;
             bindings = <&kp LBKT>;
             layers = <BASE>;
+            display-name = "N+M [";
+            timeout-ms = <50>;
         };
 
-        /* , + . → ] */
         combo_rbkt {
-            timeout-ms = <50>;
             key-positions = <34 35>;
             bindings = <&kp RBKT>;
             layers = <BASE>;
+            display-name = ",+. ]";
+            timeout-ms = <50>;
         };
     };
 
@@ -49,14 +50,12 @@
             compatible = "zmk,behavior-macro-one-param";
             #binding-cells = <1>;
             bindings = <&to 0 &macro_param_1to1 &kp MACRO_PLACEHOLDER>;
-            label = "TO_LAYER_0";
         };
     };
 
     behaviors {
         lt_to_layer_0: lt_to_layer_0 {
             compatible = "zmk,behavior-hold-tap";
-            label = "LAYER_TAP_TO_0";
             bindings = <&mo>, <&to_layer_0>;
 
             #binding-cells = <2>;
